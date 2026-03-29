@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wisp UI - Button Examples</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen p-8">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">Wisp UI - Button Components</h1>
+    
+    <!-- Primary Buttons -->
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Primary Buttons</h2>
+      <div class="space-x-4">
+        <button class="inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+          Primary
+        </button>
+        <button class="inline-flex items-center justify-center px-3 py-1.5 text-sm bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+          Small
+        </button>
+        <button class="inline-flex items-center justify-center px-6 py-3 text-lg bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+          Large
+        </button>
+        <button disabled class="inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+          Disabled
+        </button>
+      </div>
+    </section>
+
+    <!-- Secondary Buttons -->
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Secondary Buttons</h2>
+      <div class="space-x-4">
+        <button class="inline-flex items-center justify-center px-4 py-2 bg-gray-100 text-gray-900 font-medium rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+          Secondary
+        </button>
+        <button class="inline-flex items-center justify-center px-4 py-2 border border-gray-300 bg-transparent text-gray-700 font-medium rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+          Outline
+        </button>
+      </div>
+    </section>
+
+    <!-- Danger Button -->
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Danger Button</h2>
+      <div class="space-x-4">
+        <button class="inline-flex items-center justify-center px-4 py-2 bg-red-600 text-white font-medium rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+          Delete
+        </button>
+      </div>
+    </section>
+
+    <!-- Icon Button -->
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Icon Button</h2>
+      <div class="space-x-4">
+        <button class="inline-flex items-center justify-center p-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </button>
+        <button class="inline-flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+          </svg>
+          <span>Download</span>
+        </button>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
