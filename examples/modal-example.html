@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wisp UI - Modal Component Examples</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+    <style>
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.dark {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-container {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: scale(1);
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 28rem;
+        }
+
+        .dark .modal-container {
+            background-color: rgb(31, 41, 55);
+        }
+
+        .modal-container.sm { max-width: 24rem; }
+        .modal-container.md { max-width: 28rem; }
+        .modal-container.lg { max-width: 32rem; }
+        .modal-container.xl { max-width: 36rem; }
+        .modal-container.full { max-width: 100%; margin-left: 1rem; margin-right: 1rem; }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+                    🎭 Modal Component
+                </h1>
+                <button
+                    onclick="toggleDarkMode()"
+                    class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                >
+                    🌓 Toggle Dark Mode
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <!-- Example 1: Basic Modal -->
+        <section class="mb-8">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
+                    1. Modal Básico
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                    Un modal simple con título y contenido básico.
+                </p>
+                <button
+                    onclick="openModal('modal-basic')"
+                    class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                >
+                    Abrir Modal Básico
+                </button>
+            </div>
+        </section>
+
+        <!-- Example 2: Modal with Actions -->
+        <section class="mb-8">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
+                    2. Modal con Acciones
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                    Modal con botones de acción en el footer.
+                </p>
+                <button
+                    onclick="openModal('modal-actions')"
+                    class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+                >
+                    Abrir Modal con Acciones
+                </button>
+            </div>
+        </section>
+
+        <!-- Example 3: Different Sizes -->
+        <section class="mb-8">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
+                    3. Diferentes Tamaños
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                    Modales en diferentes tamaños: sm, md, lg, xl, full.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <button
+                        onclick="openModal('modal-sm')"
+                        class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                    >
+                        Small
+                    </button>
+                    <button
+                        onclick="openModal('modal-lg')"
+                        class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                    >
+                        Large
+                    </button>
+                    <button
+                        onclick="openModal('modal-xl')"
+                        class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                    >
+                        XL
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example 4: Without Overlay -->
+        <section class="mb-8">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
+                    4. Sin Overlay
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                    Modal que aparece sin fondo oscuro.
+                </p>
+                <button
+                    onclick="openModal('modal-no-overlay')"
+                    class="px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-colors"
+                >
+                    Abrir Sin Overlay
+                </button>
+            </div>
+        </section>
+
+        <!-- Example 5: Cannot Close Easily -->
+        <section class="mb-8">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
+                    5. No Se Puede Cerrar Fácilmente
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                    Modal que no se cierra al hacer clic fuera o presionar ESC.
+                </p>
+                <button
+                    onclick="openModal('modal-no-close')"
+                    class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+                >
+                    Abrir Modal Bloqueado
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Basic -->
+    <div id="modal-basic" class="modal-overlay hidden" onclick="closeModalOnOverlay(event, 'modal-basic')">
+        <div class="modal-container md" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Modal Básico</h3>
+                <button onclick="closeModal('modal-basic')" class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg p-1 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <p class="text-gray-700 dark:text-gray-300">
+                    Este es un modal básico. Puedes cerrarlo haciendo clic en la X, presionando ESC o haciendo clic fuera del modal.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Actions -->
+    <div id="modal-actions" class="modal-overlay hidden" onclick="closeModalOnOverlay(event, 'modal-actions')">
+        <div class="modal-container md" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Confirmar Acción</h3>
+                <button onclick="closeModal('modal-actions')" class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg p-1 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <p class="text-gray-700 dark:text-gray-300 mb-4">
+                    ¿Estás seguro de que quieres proceder con esta acción? Esta operación no se puede deshacer.
+                </p>
+            </div>
+            <div class="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-b-lg">
+                <button onclick="closeModal('modal-actions')" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                    Cancelar
+                </button>
+                <button onclick="closeModal('modal-actions')" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal SM -->
+    <div id="modal-sm" class="modal-overlay hidden" onclick="closeModalOnOverlay(event, 'modal-sm')">
+        <div class="modal-container sm" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Small Modal</h3>
+                <button onclick="closeModal('modal-sm')" class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg p-1 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <p class="text-gray-700 dark:text-gray-300">Este es un modal pequeño (sm).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal LG -->
+    <div id="modal-lg" class="modal-overlay hidden" onclick="closeModalOnOverlay(event, 'modal-lg')">
+        <div class="modal-container lg" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Large Modal</h3>
+                <button onclick="closeModal('modal-lg')" class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg p-1 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <p class="text-gray-700 dark:text-gray-300">Este es un modal grande (lg). Perfecto para mostrar más contenido.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal XL -->
+    <div id="modal-xl" class="modal-overlay hidden" onclick="closeModalOnOverlay(event, 'modal-xl')">
+        <div class="modal-container xl" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Extra Large Modal</h3>
+                <button onclick="closeModal('modal-xl')" class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg p-1 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <p class="text-gray-700 dark:text-gray-300">Este es un modal extra grande (xl). Ideal para formularios complejos o contenido extenso.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal No Overlay -->
+    <div id="modal-no-overlay" class="fixed inset-0 z-50 flex items-center justify-center hidden" onclick="closeModal('modal-no-overlay')">
+        <div class="modal-container md" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Sin Overlay</h3>
+                <button onclick="closeModal('modal-no-overlay')" class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg p-1 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <p class="text-gray-700 dark:text-gray-300">Este modal aparece sin un fondo oscuro overlay.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal No Close -->
+    <div id="modal-no-close" class="modal-overlay hidden">
+        <div class="modal-container md" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Modal Bloqueado</h3>
+            </div>
+            <div class="p-6">
+                <p class="text-gray-700 dark:text-gray-300 mb-4">
+                    Este modal no se puede cerrar haciendo clic fuera o presionando ESC. Debes usar el botón de abajo.
+                </p>
+                <button onclick="closeModal('modal-no-close')" class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors w-full">
+                    Cerrar de Todas Formas
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-600 dark:text-gray-400">
+                Wisp UI - Componente Modal | 
+                <a href="https://github.com/yasmramos/wisp-ui" class="text-blue-600 dark:text-blue-400 hover:underline" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        // Open modal
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('hidden');
+            document.body.classList.add('modal-open');
+            
+            // Add dark mode class to overlay if needed
+            if (document.documentElement.classList.contains('dark')) {
+                modal.classList.add('dark');
+            }
+        }
+
+        // Close modal
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('hidden');
+            modal.classList.remove('dark');
+            document.body.classList.remove('modal-open');
+        }
+
+        // Close modal on overlay click
+        function closeModalOnOverlay(event, modalId) {
+            if (event.target === event.currentTarget) {
+                closeModal(modalId);
+            }
+        }
+
+        // Handle ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal-overlay:not(.hidden)');
+                modals.forEach(modal => {
+                    // Check if this modal allows closing on ESC
+                    const modalId = modal.id;
+                    if (modalId !== 'modal-no-close') {
+                        closeModal(modalId);
+                    }
+                });
+            }
+        });
+
+        // Sync dark mode with overlays
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'class') {
+                    const isDark = document.documentElement.classList.contains('dark');
+                    const overlays = document.querySelectorAll('.modal-overlay:not(.hidden)');
+                    overlays.forEach(overlay => {
+                        if (isDark) {
+                            overlay.classList.add('dark');
+                        } else {
+                            overlay.classList.remove('dark');
+                        }
+                    });
+                }
+            });
+        });
+
+        observer.observe(document.documentElement, { attributes: true });
+    </script>
+</body>
+</html>
