@@ -50,3 +50,6 @@ export {
   AlertSimple,
   AlertTitleOnly
 } from './alert.js';
+
+// Modal Component
+export { Modal } from './Modal';
