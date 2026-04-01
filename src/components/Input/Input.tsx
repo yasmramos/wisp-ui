@@ -1,15 +1,16 @@
 import React from 'react';
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   label?: string;
   error?: string;
   helperText?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   variant?: 'basic' | 'filled' | 'flushed';
+  as?: 'input' | 'textarea';
 }
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+export const Input = React.forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
   (
     {
       label,
@@ -19,6 +20,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       rightIcon,
       variant = 'basic',
       className = '',
+      as = 'input',
+      id,
       ...props
     },
     ref
@@ -33,10 +36,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const errorStyles = "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20";
 
+    const Component = as;
+    const testId = as === 'textarea' ? 'textarea-test' : 'input-test';
+
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label htmlFor={id} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             {label}
           </label>
         )}
@@ -48,8 +54,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
           
-          <input
+          <Component
             ref={ref}
+            id={id}
+            data-testid={testId}
             className={`
               ${baseStyles}
               ${variants[variant]}
@@ -58,7 +66,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               ${rightIcon ? 'pr-10' : ''}
               ${className}
             `}
-            {...props}
+            {...(props as any)}
           />
           
           {rightIcon && (

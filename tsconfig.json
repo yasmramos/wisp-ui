@@ -10,7 +10,7 @@
     "module": "nodenext",
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["react", "react-dom"],
+    "types": ["react", "react-dom", "vitest/globals"],
 
     // Other Outputs
     "sourceMap": true,
@@ -42,6 +42,6 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "examples", "docs"]
+  "include": ["src/components/**/*.tsx", "src/components/**/*.ts"],
+  "exclude": ["node_modules", "dist", "examples", "docs", "**/__tests__/**"]
 }
