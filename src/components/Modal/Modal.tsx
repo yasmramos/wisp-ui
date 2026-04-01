@@ -5,10 +5,14 @@ export interface ModalProps {
   onClose: () => void;
   children: React.ReactNode;
   title?: string;
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   closeOnOverlay?: boolean;
+  disableOverlayClick?: boolean;
   closeOnEsc?: boolean;
   className?: string;
+  ariaLabel?: string;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -16,10 +20,14 @@ export const Modal: React.FC<ModalProps> = ({
   onClose,
   children,
   title,
+  header,
+  footer,
   size = 'md',
   closeOnOverlay = true,
+  disableOverlayClick = false,
   closeOnEsc = true,
   className = '',
+  ariaLabel,
 }) => {
   // Bloquear scroll cuando el modal está abierto
   useEffect(() => {
@@ -61,17 +69,21 @@ export const Modal: React.FC<ModalProps> = ({
     full: 'max-w-full mx-4'
   };
 
+  const canCloseOnOverlay = closeOnOverlay && !disableOverlayClick;
+
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? 'modal-title' : undefined}
+      aria-label={ariaLabel}
     >
       {/* Overlay */}
       <div 
-        className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity ${closeOnOverlay ? 'cursor-pointer' : ''}`}
-        onClick={closeOnOverlay ? onClose : undefined}
+        data-testid="modal-overlay"
+        className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity ${canCloseOnOverlay ? 'cursor-pointer' : ''}`}
+        onClick={canCloseOnOverlay ? onClose : undefined}
         aria-hidden="true"
       />
       
@@ -81,27 +93,38 @@ export const Modal: React.FC<ModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        {title && (
+        {header || title ? (
           <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-            <h2 id="modal-title" className="text-xl font-semibold text-gray-900 dark:text-white">
-              {title}
-            </h2>
-            <button
-              onClick={onClose}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              aria-label="Close modal"
-            >
-              <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </button>
+            {header || (
+              <h2 id="modal-title" className="text-xl font-semibold text-gray-900 dark:text-white">
+                {title}
+              </h2>
+            )}
+            {!header && (
+              <button
+                onClick={onClose}
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                aria-label="Close modal"
+              >
+                <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+            )}
           </div>
-        )}
+        ) : null}
         
         {/* Body */}
         <div className="p-6">
           {children}
         </div>
+        
+        {/* Footer */}
+        {footer && (
+          <div className="p-6 pt-0 border-t border-gray-200 dark:border-gray-700">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );

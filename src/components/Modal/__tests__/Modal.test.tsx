@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import Modal from '../Modal';
+import { Modal } from '../Modal.tsx';
 
 describe('Modal', () => {
   it('renders when isOpen is true', () => {
@@ -28,11 +28,9 @@ describe('Modal', () => {
         <p>Modal content</p>
       </Modal>
     );
-    // Simular click en el overlay usando data-testid
-    const overlay = document.querySelector('[data-testid="modal-overlay"]');
-    if (overlay) {
-      fireEvent.click(overlay);
-    }
+    // El overlay ahora tiene data-testid
+    const overlay = screen.getByTestId('modal-overlay');
+    fireEvent.click(overlay);
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
 
@@ -65,14 +63,14 @@ describe('Modal', () => {
       <Modal 
         isOpen={true} 
         onClose={vi.fn()}
-        header={<h2>Modal Header</h2>}
+        title="Modal Header"
         footer={<button>Save</button>}
       >
         <p>Modal Body</p>
       </Modal>
     );
-    // Usar querySelector para encontrar el header ya que puede estar en un contenedor
-    expect(document.querySelector('h2')).toBeInTheDocument();
+    // Verificar que el título se renderiza correctamente
+    expect(screen.getByText('Modal Header')).toBeInTheDocument();
     expect(screen.getByText('Modal Body')).toBeInTheDocument();
     expect(screen.getByText('Save')).toBeInTheDocument();
   });
